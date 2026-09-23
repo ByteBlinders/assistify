@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Assistify è l'assistente virtuale su WhatsApp che prenota i pazienti al posto della segreteria: orari reali da Google Calendar, promemoria automatici, avvisi allo studio.">
+<meta property="og:title" content="Assistify – Prenotazioni su WhatsApp per studi">
+<meta property="og:description" content="Il tuo studio prenota i pazienti anche quando la segreteria è chiusa.">
+<meta property="og:image" content="assets/demo-poster.jpg">
+<meta name="theme-color" content="#062e29">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>Assistify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --ground:#f6f3ee; --surface:#ffffff; --ink:#0b2a26; --ink-soft:#4d625d; --line:#e2ddd4;
+  --brand:#0e5c52; --brand-deep:#062e29; --accent:#f0a262; --accent-deep:#e0773a; --accent-ink:#062e29;
+  --chip:#ebe6dc; --bubble-out:#d9fdd3; --bubble-in:#ffffff; --chat:#efeae2;
+  --hero-ink:#ffffff; --hero-soft:#bfe0d8;
+  --radius:18px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#071f1c; --surface:#0c2b27; --ink:#eef4f2; --ink-soft:#9fbab3; --line:#1d3f39;
+    --chip:#12352f; --bubble-in:#ffffff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#071f1c; --surface:#0c2b27; --ink:#eef4f2; --ink-soft:#9fbab3; --line:#1d3f39;
+  --chip:#12352f; --bubble-in:#ffffff; color-scheme: dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.6 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{margin:0;letter-spacing:-.025em;text-wrap:balance;line-height:1.1}
+h2{font-size:clamp(28px,4.2vw,42px);font-weight:800}
+h3{font-size:19px;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep)}
+.lead{font-size:clamp(17px,1.8vw,19px);color:var(--ink-soft);max-width:60ch}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;text-decoration:none;padding:14px 22px;border-radius:999px;border:2px solid transparent;transition:transform .15s ease, background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:var(--accent-ink)}
+.btn-accent:hover{background:#f4b27a}
+.btn-ghost{border-color:rgba(255,255,255,.35);color:var(--hero-ink)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--brand-deep);border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:21px;letter-spacing:-.03em}
+.logo svg{width:34px;height:34px;flex-shrink:0}
+.nav{display:flex;align-items:center;gap:26px}
+.nav a{color:#cfe6e0;text-decoration:none;font-size:15px;font-weight:600}
+.nav a:hover{color:#fff}
+.nav .btn{padding:9px 16px;font-size:14px}
+@media (max-width:820px){ .nav a:not(.btn){display:none} }
+
+/* hero */
+.hero{background:radial-gradient(110% 90% at 20% 0%, #12776a 0%, #0a4239 45%, var(--brand-deep) 100%);color:var(--hero-ink);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:64px 0}
+.hero h1{font-size:clamp(38px,6vw,64px);font-weight:800;letter-spacing:-.04em;line-height:1.02}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lead{color:var(--hero-soft);margin-top:20px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero .proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:30px;font-size:14px;color:var(--hero-soft)}
+.hero .proof span{display:flex;align-items:center;gap:7px}
+.hero .proof svg{width:16px;height:16px;color:var(--accent)}
+.phone{justify-self:center;width:min(330px,100%);aspect-ratio:9/16;max-width:100%;border-radius:40px 40px 0 0;background:#0b0f10;padding:10px 10px 0;box-shadow:0 30px 80px rgba(0,0,0,.45);align-self:end}
+.phone video{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:31px 31px 0 0;display:block;background:#0a4239}
+@media (max-width:860px){ .hero .wrap{grid-template-columns:1fr;padding-top:44px} .phone{width:min(300px,100%)} }
+
+section{padding-block:clamp(64px,9vw,104px)}
+.sec-head{display:grid;gap:14px;margin-bottom:44px;max-width:720px}
+
+/* problema */
+.pain{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pain div{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.pain strong{display:block;font-size:34px;font-weight:800;letter-spacing:-.03em;color:var(--brand)}
+:root[data-theme="dark"] .pain strong{color:var(--accent)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .pain strong{color:var(--accent)} }
+.pain p{color:var(--ink-soft);margin-top:6px;font-size:16px}
+@media (max-width:760px){ .pain{grid-template-columns:1fr} }
+
+/* come funziona */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s}
+.step{display:grid;gap:14px;align-content:start}
+.step .n{width:42px;height:42px;border-radius:12px;background:var(--brand);color:#fff;font-weight:800;display:grid;place-items:center;font-size:18px}
+.step p{color:var(--ink-soft);font-size:16px}
+.chat{background:var(--chat);border-radius:16px;padding:14px;display:grid;gap:7px;font-size:14px;line-height:1.4;color:#111b21;min-height:170px;align-content:start}
+.b{max-width:88%;padding:8px 11px;border-radius:12px;box-shadow:0 1px .5px rgba(0,0,0,.12)}
+.b.in{background:var(--bubble-in);border-top-left-radius:3px}
+.b.out{background:var(--bubble-out);justify-self:end;border-top-right-radius:3px}
+.rows{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px .5px rgba(0,0,0,.12)}
+.rows div{padding:7px 12px;border-top:1px solid #eef0f1;display:flex;justify-content:space-between;gap:8px}
+.rows div:first-child{border-top:0;color:#008069;font-weight:700;font-size:12.5px}
+.rows small{color:#667781}
+.rows .on{background:#f0f2f5;font-weight:700}
+@media (max-width:860px){ .steps{grid-template-columns:1fr} }
+
+/* funzioni */
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px}
+.feat div{display:grid;grid-template-columns:40px 1fr;gap:4px 14px;padding:20px 0;border-top:1px solid var(--line)}
+.feat svg{grid-row:span 2;width:40px;height:40px;padding:9px;border-radius:11px;background:var(--chip);color:var(--brand)}
+:root[data-theme="dark"] .feat svg{color:var(--accent)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .feat svg{color:var(--accent)} }
+.feat p{color:var(--ink-soft);font-size:15.5px}
+@media (max-width:760px){ .feat{grid-template-columns:1fr} }
+
+/* lato studio */
+.studio{background:var(--brand-deep);color:#fff}
+.studio .sec-head .lead{color:var(--hero-soft)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#fff;color:#111b21;border-radius:16px;padding:16px 18px;display:grid;gap:6px;align-content:start}
+.card .lab{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#667781}
+.card b{font-size:15px;line-height:1.3}
+.card span{font-size:14px;color:#3b4a54;line-height:1.45}
+@media (max-width:960px){ .cards{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:520px){ .cards{grid-template-columns:1fr} }
+
+/* per chi */
+.who{display:flex;flex-wrap:wrap;gap:10px}
+.who span{background:var(--surface);border:1px solid var(--line);padding:10px 16px;border-radius:999px;font-weight:600;font-size:15.5px}
+.who span.main{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:820px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 20px}
+summary{cursor:pointer;font-weight:700;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;line-height:1;color:var(--accent-deep)}
+details[open] summary::after{content:"–"}
+details p{color:var(--ink-soft);padding-bottom:16px;font-size:16px}
+
+/* contatti */
+.contact{background:radial-gradient(100% 120% at 80% 0%, #12776a, var(--brand-deep) 70%);color:#fff;border-radius:28px;padding:clamp(32px,6vw,64px);display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.contact .lead{color:var(--hero-soft);margin-top:14px}
+.contact .ways{display:grid;gap:12px}
+.way{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:14px 16px;text-decoration:none;color:#fff}
+.way:hover{background:rgba(255,255,255,.12)}
+.way svg{width:26px;height:26px;color:var(--accent);flex-shrink:0}
+.way small{display:block;color:var(--hero-soft);font-size:13px}
+.way b{font-size:16px;word-break:break-all}
+@media (max-width:820px){ .contact{grid-template-columns:1fr} }
+
+footer{padding-block:36px 48px;color:var(--ink-soft);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3ad6f"/><stop offset="1" stop-color="#e0773a"/></linearGradient>
+    <symbol id="mark" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="url(#og)"/><g transform="translate(12 12) scale(1.667)" fill="none" stroke="#062e29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M8.5 11.5l2.3 2.3 4.7-4.7"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Assistify, torna all'inizio"><svg><use href="#mark"/></svg>Assistify</a>
+    <nav class="nav" aria-label="Sezioni">
+      <a href="#come-funziona">Come funziona</a>
+      <a href="#funzioni">Funzioni</a>
+      <a href="#faq">Domande</a>
+      <a class="btn btn-accent" href="#contatti">Richiedi una demo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding-block:0">
+    <div class="wrap">
+      <div style="padding-bottom:64px">
+        <p class="eyebrow" style="color:var(--accent)">Assistente virtuale su WhatsApp</p>
+        <h1 style="margin-top:14px">Il tuo studio prenota i pazienti <em>anche quando la segreteria è chiusa.</em></h1>
+        <p class="lead">Assistify risponde su WhatsApp al posto vostro: fa scegliere prestazione, giorno e orario tra quelli davvero liberi in agenda, conferma l'appuntamento e manda i promemoria. Voi trovate tutto già in calendario.</p>
+        <div class="ctas">
+          <a class="btn btn-accent" href="#contatti">Richiedi una demo gratuita</a>
+          <a class="btn btn-ghost" href="#come-funziona">Guarda come funziona</a>
+        </div>
+        <div class="proof">
+          <span><svg><use href="#i-check"/></svg>Nessuna app da scaricare</span>
+          <span><svg><use href="#i-check"/></svg>Attivo 24 ore su 24</span>
+          <span><svg><use href="#i-check"/></svg>Collegato a Google Calendar</span>
+        </div>
+      </div>
+      <div class="phone">
+        <video src="assets/demo.mp4" poster="assets/demo-poster.jpg" autoplay muted loop playsinline aria-label="Video dimostrativo: un paziente prenota una pulizia dentale su WhatsApp"></video>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Il problema</p>
+        <h2>Il telefono squilla mentre state lavorando.</h2>
+        <p class="lead">In uno studio la segreteria fa mille cose insieme. Le chiamate perse diventano appuntamenti persi, e quelli dimenticati diventano poltrone vuote.</p>
+      </div>
+      <div class="pain">
+        <div><strong>Fuori orario</strong><p>La sera e nel weekend nessuno risponde. Chi vuole prenotare scrive a un altro studio.</p></div>
+        <div><strong>Linea occupata</strong><p>Durante le visite il telefono resta senza risposta, o interrompe il lavoro alla poltrona.</p></div>
+        <div><strong>Dimenticanze</strong><p>Ricordare gli appuntamenti uno per uno richiede tempo che la segreteria non ha.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="come-funziona" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Come funziona</p>
+        <h2>Tre tocchi, e l'appuntamento è in agenda.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="n">1</div>
+          <h3>Il paziente apre il menu</h3>
+          <p>Scrive al numero WhatsApp dello studio e sceglie cosa gli serve: prenotare, spostare, cancellare, un'urgenza o parlare con la segreteria.</p>
+          <div class="chat" aria-hidden="true">
+            <div class="b out">Buonasera, vorrei prenotare</div>
+            <div class="rows"><div>Servizi</div><div class="on">📅 Prenota appuntamento</div><div>🔄 Modifica appuntamento</div><div>🚨 Ho un'urgenza</div><div>📍 Info e dove siamo</div></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <h3>Sceglie tra gli orari liberi</h3>
+          <p>L'assistente legge l'agenda dello studio in tempo reale e propone solo gli orari davvero disponibili, tenendo conto della durata di ogni prestazione.</p>
+          <div class="chat" aria-hidden="true">
+            <div class="b in">Orari liberi per lunedì 28 settembre (pomeriggio):</div>
+            <div class="rows"><div>Orari liberi</div><div>15:30 <small>Pulizia · 45 min</small></div><div class="on">17:00 <small>Pulizia · 45 min</small></div><div>18:30 <small>Pulizia · 45 min</small></div></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <h3>Conferma, e lo studio è avvisato</h3>
+          <p>Il paziente riceve il riepilogo con il codice di prenotazione. Lo studio riceve subito l'avviso e trova l'evento già in calendario.</p>
+          <div class="chat" aria-hidden="true">
+            <div class="b in">✅ Prenotazione confermata!<br>🦷 Pulizia dentale<br>📅 lunedì 28 settembre alle 17:00<br>🔖 Codice: PR-20260928-K7QX</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="funzioni" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Funzioni</p>
+        <h2>Tutto quello che fa una brava segreteria, via chat.</h2>
+      </div>
+      <div class="feat">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><h3>Prenota, sposta, cancella</h3><p>Il paziente gestisce da solo i propri appuntamenti, senza telefonare.</p></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>Orari e durate reali</h3><p>Rispetta gli orari di apertura, le pause e la durata di ogni prestazione. Niente sovrapposizioni.</p></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><h3>Promemoria automatici</h3><p>Il paziente riceve un messaggio il giorno prima e uno due ore prima dell'appuntamento.</p></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><h3>Urgenze gestite con cura</h3><p>Nessuna diagnosi: l'assistente segnala subito la richiesta allo studio e indica al paziente cosa fare nei casi gravi.</p></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><h3>Passaggio alla segreteria</h3><p>Quando serve una persona, la conversazione passa allo staff e il bot resta in silenzio.</p></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Indirizzo e mappa</h3><p>Con un tocco il paziente trova indirizzo, orari, telefono e il percorso su Google Maps.</p></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg><h3>Registro prenotazioni</h3><p>Ogni prenotazione finisce anche in un foglio ordinato, utile per controlli e statistiche.</p></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><h3>Dati ridotti al minimo</h3><p>Chiede solo ciò che serve per l'appuntamento e invita a non scrivere dati sanitari nelle note.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="studio">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow" style="color:var(--accent)">Lato studio</p>
+        <h2>Nello stesso istante, lo studio sa tutto.</h2>
+        <p class="lead">Ogni nuova prenotazione arriva su più canali, così nessuno se la perde.</p>
+      </div>
+      <div class="cards">
+        <div class="card"><span class="lab">WhatsApp segreteria</span><b>🔔 Nuova prenotazione</b><span>Marco Bianchi · Pulizia dentale · 28/09 ore 17:00</span></div>
+        <div class="card"><span class="lab">Email</span><b>Nuova prenotazione – Lun 28/09 17:00</b><span>Codice, paziente, prestazione, durata e note.</span></div>
+        <div class="card"><span class="lab">Google Calendar</span><b>17:00–17:45</b><span>Pulizia dentale – Marco Bianchi</span></div>
+        <div class="card"><span class="lab">Registro</span><b>Riga aggiunta</b><span>PR-…K7QX · Marco Bianchi · 28/09 · 17:00</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Per chi è</p>
+        <h2>Nato per gli studi dentistici, adatto a chi lavora su appuntamento.</h2>
+      </div>
+      <div class="who">
+        <span class="main">Studi dentistici</span><span>Centri estetici</span><span>Parrucchieri e barbieri</span><span>Fisioterapisti</span><span>Studi medici</span><span>Palestre e personal trainer</span><span>Ristoranti</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Domande frequenti</p>
+        <h2>Prima di iniziare</h2>
+      </div>
+      <div class="faq">
+        <details><summary>I pazienti devono scaricare qualcosa?</summary><p>No. Usano WhatsApp come fanno già ogni giorno: scrivono al numero dello studio e scelgono dal menu.</p></details>
+        <details><summary>Quale numero di telefono si usa?</summary><p>Un numero WhatsApp dedicato allo studio, collegato all'assistente. Vi aiutiamo noi a configurarlo.</p></details>
+        <details><summary>Serve cambiare il gestionale o l'agenda?</summary><p>No. L'assistente lavora con Google Calendar: se lo usate già, si collega a quello; altrimenti ne prepariamo uno dedicato allo studio.</p></details>
+        <details><summary>E se un paziente ha un'urgenza?</summary><p>L'assistente non fa diagnosi. Segnala subito la richiesta allo studio, mostra il numero da chiamare e, nei casi gravi, invita a contattare il 112 o il pronto soccorso.</p></details>
+        <details><summary>Posso personalizzare servizi, orari e testi?</summary><p>Sì: prestazioni, durate, orari di apertura, giorni speciali e contatti vengono impostati sui dati del vostro studio.</p></details>
+        <details><summary>Quanto costa?</summary><p>Dipende dalle esigenze dello studio. Scriveteci: vi mostriamo una demo e vi facciamo un preventivo su misura.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contatti" style="padding-top:0">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <p class="eyebrow" style="color:var(--accent)">Contatti</p>
+          <h2 style="margin-top:12px">Vuoi vederlo sul tuo studio?</h2>
+          <p class="lead">Ti mostriamo una demo con i servizi e gli orari del tuo studio. Senza impegno.</p>
+        </div>
+        <div class="ways">
+          <a class="way" href="https://www.instagram.com/assistify.it/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            <span><small>Scrivici in DM su Instagram</small><b>@assistify.it</b></span>
+          </a>
+          <a class="way" id="email-way" href="#" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span><small>Oppure via email</small><b id="email-text"></b></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Assistify · Assistente virtuale su WhatsApp per studi e attività</span>
+    <span style="display:flex;gap:20px"><a href="https://byteblinders.github.io/assistify-privacy/" target="_blank" rel="noopener">Privacy</a><a href="https://www.instagram.com/assistify.it/" target="_blank" rel="noopener">Instagram</a></span>
+  </div>
+</footer>
+
+<script>
+  // ⚙️ Quando avrai la nuova email, scrivila qui tra le virgolette: comparirà da sola nei contatti.
+  const CONTATTO_EMAIL = '';
+  if (CONTATTO_EMAIL) {
+    const a = document.getElementById('email-way');
+    a.href = 'mailto:' + CONTATTO_EMAIL; document.getElementById('email-text').textContent = CONTATTO_EMAIL; a.hidden = false;
+  }
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
