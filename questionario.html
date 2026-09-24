@@ -466,17 +466,25 @@ $('f').addEventListener('submit', async e => {
   }
   if (N8N_WEBHOOK) { try { fetch(N8N_WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...body, testo: D.txt}), keepalive:true}); } catch (err) {} }
 
-  // Con il logo allegato: invio classico con file (poi FormSubmit riporta qui con ?grazie=1)
-  if (prev && logo){
+  // Invio classico con allegati: scheda PDF (+ logo). FormSubmit poi riporta qui con ?grazie=1
+  try{
+    const sections=[{t:'Contatti',rows:[['Prodotto',prodotti],['Nome',val('nome')],['Attività',val('attivita')],['Città',val('citta')],['Email',val('email')],['Cellulare',val('cellulare')],['Contatto preferito',body['Contatto preferito']]]}];
+    if(chat){const rows=[['Settore',D.S?D.S.n:'-'],['Appuntamenti al mese',val('app')],['Persone o agende',val('op')]];D.qs.forEach((q,i)=>rows.push([`${i+1}. ${q}`,D.answers[i+1]||'-']));sections.push({t:'Chatbot WhatsApp',rows});}
+    if(prev){sections.push({t:'Preventivi',rows:Object.entries(collectPrev()).map(([k,v])=>[k.replace('Preventivi · ',''),v])});}
+    sections.push({t:'Note',rows:[['Note',val('note')||'-']]});
+    if(chat)sections.push({t:'Testo per il Preventivatore',rows:[['Da incollare in "Incolla le risposte"',D.txt]]});
+    const bytes=await buildPdf('Richiesta demo · '+prodotti+' · '+new Date().toLocaleDateString('it-IT'),sections,prev?logo:null);
+    const pdfFile=new File([bytes],'Richiesta_demo_'+(val('attivita')||'cliente').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').slice(0,40)+'.pdf',{type:'application/pdf'});
     const back = new URL(location.href.split('?')[0]);
     back.searchParams.set('grazie','1'); back.searchParams.set('n',firstName); back.searchParams.set('a',val('attivita')); back.searchParams.set('p',prodotti);
     const hf = document.createElement('form');
     hf.method='POST'; hf.enctype='multipart/form-data'; hf.action='https://formsubmit.co/' + EMAIL_DEST; hf.hidden=true;
     Object.entries({...body, _next: back.href}).forEach(([k,v])=>{const i=document.createElement('input');i.type='hidden';i.name=k;i.value=v;hf.appendChild(i);});
-    const lf=$('pv_logo'); lf.name='attachment'; hf.appendChild(lf);
+    const fi=document.createElement('input');fi.type='file';fi.name='attachment';fi.multiple=true;
+    const dt=new DataTransfer();if(prev&&logo)dt.items.add(logo);dt.items.add(pdfFile);fi.files=dt.files;hf.appendChild(fi);
     document.body.appendChild(hf); hf.submit();
     return;
-  }
+  }catch(err){ /* se il PDF non si può creare, si prosegue con l'invio semplice */ }
 
   let ok = false;
   try {
@@ -494,6 +502,53 @@ $('f').addEventListener('submit', async e => {
     $('fail').hidden = false; $('fail').scrollIntoView({block:'start'});
   }
 });
+/* ---------- Scheda PDF allegata all'email ---------- */
+const WIN={'€':128,'‚':130,'„':132,'…':133,'‘':145,'’':146,'“':147,'”':148,'•':149,'–':150,'—':151,'™':153};
+function winAnsi(str){let o='';for(const ch of String(str)){const c=ch.codePointAt(0);if(WIN[ch])o+=String.fromCharCode(WIN[ch]);else if(c<256&&c!==173)o+=ch;else if(c===8594)o+='->';else if(c>0xFFFF||(c>=0x2600&&c<0x2800))o+='';else o+='?';}return o;}
+function pdfEsc(s){return winAnsi(s).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)').replace(/[\r\t]/g,' ');}
+function wrap(text,size,maxW){
+  const avg=size*0.5,max=Math.floor(maxW/avg),out=[];
+  String(text||'').split('\n').forEach(par=>{let line='';par.split(' ').forEach(w=>{while(w.length>max){if(line){out.push(line);line='';}out.push(w.slice(0,max));w=w.slice(max);}const t=line?line+' '+w:w;if(t.length>max){out.push(line);line=w;}else line=t;});out.push(line);});
+  return out;
+}
+async function logoJpeg(file){
+  if(!file)return null;
+  try{const img=new Image();img.src=URL.createObjectURL(file);await img.decode();const k=Math.min(1,300/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*k));c.height=Math.max(1,Math.round(img.height*k));const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);const b=atob(c.toDataURL('image/jpeg',0.9).split(',')[1]);return {w:c.width,h:c.height,data:b};}catch(e){return null;}
+}
+async function buildPdf(title,sections,logoFile){
+  const W=595,H=842,M=50,CW=W-2*M;const pages=[];let ops=[],y=H-M;
+  const newPage=()=>{pages.push(ops);ops=[];y=H-M;};
+  const text=(s,size,bold,x=M)=>{ops.push(`BT /${bold?'F2':'F1'} ${size} Tf ${x} ${y.toFixed(1)} Td (${pdfEsc(s)}) Tj ET`);};
+  const need=h=>{if(y-h<M)newPage();};
+  const logo=await logoJpeg(logoFile);
+  // intestazione
+  ops.push('0.055 0.361 0.322 rg',`0 ${H-90} ${W} 90 re f`,'1 1 1 rg');
+  y=H-48;text('Assistify',22,true);y=H-70;text(title,12,false);ops.push('0 0 0 rg');
+  if(logo){const s=Math.min(70/logo.w,70/logo.h),w=logo.w*s,h=logo.h*s;ops.push(`q ${w.toFixed(1)} 0 0 ${h.toFixed(1)} ${(W-M-w).toFixed(1)} ${(H-80).toFixed(1)} cm /Im1 Do Q`);}
+  y=H-120;
+  for(const sec of sections){
+    need(40);y-=8;ops.push('0.878 0.467 0.227 rg');text(sec.t.toUpperCase(),10,true);ops.push('0 0 0 rg');y-=6;ops.push(`0.85 0.85 0.85 RG 0.5 w ${M} ${y.toFixed(1)} m ${W-M} ${y.toFixed(1)} l S`);y-=14;
+    for(const [k,v] of sec.rows){
+      const kl=wrap(k,9.5,CW),vl=wrap(v||'-',10.5,CW-12);need(kl.length*12+vl.length*14+6);
+      ops.push('0.35 0.4 0.39 rg');kl.forEach(l=>{text(l,9.5,true);y-=12;});ops.push('0 0 0 rg');
+      vl.forEach(l=>{text(l,10.5,false,M+12);y-=14;});y-=6;
+    }
+  }
+  ops.push('0.5 0.5 0.5 rg');y=M-20;text('Assistify Tech · assistifyitalia.it · info@assistifyitalia.it',8,false);
+  pages.push(ops);
+  // assemblaggio
+  const objs=[];const add=s=>{objs.push(s);return objs.length;};
+  const cat=add(null),pgs=add(null),f1=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'),f2=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
+  let im=null;if(logo)im=add(`<< /Type /XObject /Subtype /Image /Width ${logo.w} /Height ${logo.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${logo.data.length} >>\nstream\n${logo.data}\nendstream`);
+  const kids=[];
+  pages.forEach((p,i)=>{const c=p.join('\n');const cs=add(`<< /Length ${c.length} >>\nstream\n${c}\nendstream`);const res=`<< /Font << /F1 ${f1} 0 R /F2 ${f2} 0 R >>${im&&i===0?` /XObject << /Im1 ${im} 0 R >>`:''} >>`;kids.push(add(`<< /Type /Page /Parent ${pgs} 0 R /MediaBox [0 0 ${W} ${H}] /Resources ${res} /Contents ${cs} 0 R >>`));});
+  objs[cat-1]=`<< /Type /Catalog /Pages ${pgs} 0 R >>`;objs[pgs-1]=`<< /Type /Pages /Kids [${kids.map(k=>k+' 0 R').join(' ')}] /Count ${kids.length} >>`;
+  let out='%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';const off=[];
+  objs.forEach((o,i)=>{off.push(out.length);out+=`${i+1} 0 obj\n${o}\nendobj\n`;});
+  const xref=out.length;out+=`xref\n0 ${objs.length+1}\n0000000000 65535 f \n`+off.map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')+`trailer\n<< /Size ${objs.length+1} /Root ${cat} 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  return new Uint8Array([...out].map(c=>c.charCodeAt(0)&255));
+}
+
 function showDone(first, nome, att, prodotti){
   $('f').hidden = true;
   $('doneTitle').textContent = `Grazie${first ? ' ' + first : ''}, abbiamo ricevuto le tue risposte!`;
