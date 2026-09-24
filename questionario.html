@@ -110,6 +110,14 @@ footer a:hover{text-decoration:underline}
 @media (max-width:820px){.nav a:not(.btn){display:none}.menu-btn{display:grid}.nav{gap:10px}.nav .btn{padding:8px 12px;font-size:13.5px}}
 @media (min-width:821px){.mnav{display:none!important}}
 @media (max-width:380px){.nav .btn{display:none}}
+.prods{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.prods{grid-template-columns:1fr}}
+.prod{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;background:var(--field)}
+.prod input{width:22px;height:22px;margin-top:2px;accent-color:var(--brand);flex-shrink:0}
+.prod b{display:block;font-size:17px}
+.prod small{display:block;color:var(--ink-soft);font-size:14px;font-weight:400}
+.prod:has(input:checked){border-color:var(--accent-deep);background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
+input[type=file]{padding:10px;font-size:14px}
 </style>
 </head>
 <body>
@@ -146,17 +154,26 @@ footer a:hover{text-decoration:underline}
     <div class="wrap">
       <p class="eyebrow">Demo gratuita di 7 giorni</p>
       <h1>Raccontaci la tua attività: prepariamo la tua demo.</h1>
-      <p class="lead">Bastano pochi minuti. Rispondi a quello che sai: se una domanda non ti è chiara lasciala vuota, ne parliamo quando ti richiamiamo.</p>
+      <p class="lead">Scegli il prodotto che ti interessa e rispondi a quello che sai: se una domanda non ti è chiara lasciala vuota, ne parliamo quando ti richiamiamo.</p>
       <ol class="path">
         <li><b>Compili il questionario</b>Contatti e qualche informazione sulla tua attività.</li>
-        <li><b>Ti ricontattiamo</b>E attiviamo la demo con i tuoi servizi e i tuoi orari, gratis per 7 giorni.</li>
-        <li><b>Preventivo su misura</b>Dopo la prova ti prepariamo una proposta pensata per te.</li>
+        <li><b>Ti ricontattiamo</b>E attiviamo la demo con i tuoi dati, gratis per 7 giorni.</li>
+        <li><b>Proposta su misura</b>Dopo la prova ti prepariamo un'offerta pensata per te.</li>
       </ol>
     </div>
   </section>
 
   <div class="wrap">
     <form id="f" novalidate>
+      <div class="card">
+        <h2>Per cosa vuoi la demo?</h2>
+        <p class="sub">Puoi sceglierli anche tutti e due.</p>
+        <div class="prods">
+          <label class="prod"><input type="checkbox" id="wantChat" checked><span><b>Chatbot WhatsApp</b><small>I clienti prenotano da soli su WhatsApp</small></span></label>
+          <label class="prod"><input type="checkbox" id="wantPrev"><span><b>Preventivi</b><small>Il preventivatore con il tuo marchio</small></span></label>
+        </div>
+      </div>
+
       <div class="card">
         <h2>I tuoi contatti</h2>
         <p class="sub">Li usiamo solo per ricontattarti e attivare la demo.</p>
@@ -176,7 +193,9 @@ footer a:hover{text-decoration:underline}
         </div>
       </div>
 
+      <div id="chatSec" style="display:grid;gap:18px">
       <div class="card">
+        <p class="eyebrow" style="color:var(--accent-deep)">Chatbot WhatsApp</p>
         <h2>La tua attività</h2>
         <label class="f"><span>Di cosa ti occupi? <span class="req" aria-hidden="true">*</span></span>
           <select name="settore" id="settore" required>
@@ -203,6 +222,36 @@ footer a:hover{text-decoration:underline}
       <div class="card" id="secCard" hidden>
         <h2 id="secTitle">Domande sulla tua attività</h2>
         <div id="secQ" style="display:grid;gap:16px"></div>
+      </div>
+      </div>
+
+      <div id="prevSec" style="display:grid;gap:18px" hidden>
+      <div class="card">
+        <p class="eyebrow" style="color:var(--accent-deep)">Preventivi</p>
+        <h2>Il tuo marchio</h2>
+        <p class="sub">Così la demo arriva già con il tuo nome, il tuo logo e i tuoi colori.</p>
+        <div class="grid2">
+          <label class="f">Logo<input type="file" id="pv_logo" name="Logo" accept="image/*"><small>PNG o JPG, massimo 5 MB. Se non ce l'hai a portata di mano, ce lo mandi dopo.</small></label>
+          <label class="f">Sottotitolo o slogan<input id="pv_slogan" placeholder="es. Matrimoni, ritratti ed eventi"></label>
+          <label class="f">Colori del marchio<input id="pv_colori" placeholder="es. nero e oro"><small>Se non li sai, li prendiamo dal logo</small></label>
+          <label class="f">Sito o Instagram<input id="pv_sito" placeholder="es. instagram.com/tuaattivita"></label>
+          <label class="f">P.IVA<input id="pv_piva"><small>Facoltativa, compare sui preventivi</small></label>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Servizi e prezzi</h2>
+        <label class="f"><span>Servizi e pacchetti che offri, con prezzo indicativo</span><textarea id="pv_servizi" style="min-height:120px" placeholder="Uno per riga, es.&#10;Matrimonio giornata intera – 1.800 €&#10;Book fotografico 1 ora – 220 €"></textarea></label>
+        <label class="f"><span>Extra o supplementi</span><textarea id="pv_extra" placeholder="es. trasferta, consegna veloce, album stampato"></textarea></label>
+      </div>
+      <div class="card">
+        <h2>Come fai i preventivi oggi</h2>
+        <div class="grid2">
+          <label class="f">Quanti preventivi fai al mese?<input id="pv_num" inputmode="numeric" placeholder="es. 10"></label>
+          <label class="f">Come li prepari oggi?<input id="pv_come" placeholder="es. Word, Excel, messaggio WhatsApp"></label>
+          <label class="f">Chiedi un acconto? Quanto?<input id="pv_acconto" placeholder="es. 30% alla conferma"></label>
+          <label class="f">Regime fiscale<select id="pv_regime"><option value="">Scegli…</option><option>Forfettario</option><option>Ordinario (con IVA)</option><option>Senza P.IVA (prestazione occasionale)</option><option>Non lo so</option></select></label>
+        </div>
+      </div>
       </div>
 
       <div class="card">
@@ -350,8 +399,25 @@ function waLink(text){ return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURI
 $('settore').addEventListener('change', renderQuestions);
 renderQuestions();
 
-// Precompilazione dal link: questionario.html?s=foto&a=Nome%20attività&n=Nome
+function syncProducts(){
+  const c=$('wantChat').checked, p=$('wantPrev').checked;
+  $('chatSec').hidden=!c; $('prevSec').hidden=!p;
+  $('settore').required=c;
+}
+['wantChat','wantPrev'].forEach(id=>$(id).addEventListener('change',()=>{if(!$('wantChat').checked&&!$('wantPrev').checked){$(id==='wantChat'?'wantPrev':'wantChat').checked=true;}syncProducts();}));
+const PREV_FIELDS=[['pv_slogan','Sottotitolo'],['pv_colori','Colori del marchio'],['pv_sito','Sito o Instagram'],['pv_piva','P.IVA'],['pv_servizi','Servizi e prezzi'],['pv_extra','Extra'],['pv_num','Preventivi al mese'],['pv_come','Come li prepara oggi'],['pv_acconto','Acconto'],['pv_regime','Regime fiscale']];
+function collectPrev(){
+  const out={};PREV_FIELDS.forEach(([id,l])=>out['Preventivi · '+l]=val(id)||'-');
+  const f=$('pv_logo').files[0];out['Preventivi · Logo']=f?'allegato ('+f.name+')':'non allegato';
+  return out;
+}
+
+// Precompilazione dal link: questionario.html?prodotto=preventivi&s=foto&a=Nome%20attività&n=Nome
 const P = new URLSearchParams(location.search);
+const PR=(P.get('prodotto')||'').toLowerCase();
+if (PR==='preventivi'){ $('wantChat').checked=false; $('wantPrev').checked=true; }
+else if (PR==='entrambi'){ $('wantPrev').checked=true; }
+syncProducts();
 if (P.get('s') && SETTORI[P.get('s')]) { $('settore').value = P.get('s'); renderQuestions(); }
 if (P.get('a')) $('attivita').value = P.get('a');
 if (P.get('n')) $('nome').value = P.get('n');
@@ -361,29 +427,57 @@ $('f').addEventListener('submit', async e => {
   e.preventDefault();
   $('err').hidden = true;
   const f = $('f');
+  const chat=$('wantChat').checked, prev=$('wantPrev').checked;
+  const logo=$('pv_logo').files[0];
+  if (logo && logo.size>5*1024*1024){ $('err').textContent='Il logo è troppo grande (massimo 5 MB): scegline una versione più leggera o mandacelo dopo su WhatsApp.'; $('err').hidden=false; return; }
   if (!f.checkValidity()){
     const bad = f.querySelector(':invalid');
-    $('err').textContent = bad?.id === 'privacy' ? 'Per inviare devi accettare l\'informativa privacy.' : 'Controlla i campi obbligatori: nome, attività, email, cellulare e tipo di attività.';
+    $('err').textContent = bad?.id === 'privacy' ? 'Per inviare devi accettare l\'informativa privacy.' : 'Controlla i campi obbligatori: nome, attività, email, cellulare'+(chat?' e tipo di attività':'')+'.';
     $('err').hidden = false; bad?.focus(); return;
   }
   if ($('hp').value) return; // spam
+  const prodotti=[chat&&'Chatbot',prev&&'Preventivi'].filter(Boolean).join(' + ');
   const D = collect();
   const body = {
-    _subject: 'Nuova richiesta demo: ' + val('attivita'),
+    _subject: `Nuova richiesta demo ${prodotti}: ${val('attivita')}`,
     _template: 'table',
     _captcha: 'false',
     _replyto: val('email'),
+    'Prodotto': prodotti,
     'Nome': val('nome'), 'Attività': val('attivita'), 'Città': val('citta'),
     'Email': val('email'), 'Cellulare': val('cellulare'),
-    'Contatto preferito': document.querySelector('input[name=contatto]:checked')?.value || '',
-    'Settore': D.S ? D.S.n : '', 'Appuntamenti al mese': val('app'), 'Persone o agende': val('op')
+    'Contatto preferito': document.querySelector('input[name=contatto]:checked')?.value || ''
   };
-  D.qs.forEach((q,i) => body[`${i+1}. ${q}`] = D.answers[i+1] || '-');
+  if (chat){
+    body['Settore']=D.S ? D.S.n : ''; body['Appuntamenti al mese']=val('app'); body['Persone o agende']=val('op');
+    D.qs.forEach((q,i) => body[`${i+1}. ${q}`] = D.answers[i+1] || '-');
+  }
+  if (prev) Object.assign(body, collectPrev());
   body['Note'] = val('note') || '-';
-  body['Testo per il Preventivatore'] = D.txt;
+  if (chat) body['Testo per il Preventivatore'] = D.txt;
 
-  const summary = `Ciao! Ho compilato il questionario per la demo gratuita di Assistify.\n${D.contatti}\n\n${D.txt}`;
+  const summary = `Ciao! Ho compilato il questionario per la demo gratuita di Assistify (${prodotti}).\n${D.contatti}\n\n`+(chat?D.txt:'')+(prev?Object.entries(collectPrev()).map(([k,v])=>k.replace('Preventivi · ','')+': '+v).join('\n'):'');
+  const firstName = val('nome').split(' ')[0];
   $('go').disabled = true; $('go').textContent = 'Invio in corso…';
+
+  if (AVVISO_WA_APIKEY) {
+    const avviso = `📝 Nuova richiesta demo (${prodotti})\n${val('nome')} – ${val('attivita')}${val('citta') ? ' (' + val('citta') + ')' : ''}${chat&&D.S ? '\nSettore: ' + D.S.n : ''}\nTel: ${val('cellulare')}\nEmail: ${val('email')}\nPreferisce: ${body['Contatto preferito']}\nDettagli nell'email.`;
+    try { fetch('https://api.callmebot.com/whatsapp.php?phone=' + AVVISO_WA_NUMERO + '&apikey=' + encodeURIComponent(AVVISO_WA_APIKEY) + '&text=' + encodeURIComponent(avviso), {mode:'no-cors', keepalive:true}); } catch (err) {}
+  }
+  if (N8N_WEBHOOK) { try { fetch(N8N_WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...body, testo: D.txt}), keepalive:true}); } catch (err) {} }
+
+  // Con il logo allegato: invio classico con file (poi FormSubmit riporta qui con ?grazie=1)
+  if (prev && logo){
+    const back = new URL(location.href.split('?')[0]);
+    back.searchParams.set('grazie','1'); back.searchParams.set('n',firstName); back.searchParams.set('a',val('attivita')); back.searchParams.set('p',prodotti);
+    const hf = document.createElement('form');
+    hf.method='POST'; hf.enctype='multipart/form-data'; hf.action='https://formsubmit.co/' + EMAIL_DEST; hf.hidden=true;
+    Object.entries({...body, _next: back.href}).forEach(([k,v])=>{const i=document.createElement('input');i.type='hidden';i.name=k;i.value=v;hf.appendChild(i);});
+    const lf=$('pv_logo'); lf.name='attachment'; hf.appendChild(lf);
+    document.body.appendChild(hf); hf.submit();
+    return;
+  }
+
   let ok = false;
   try {
     const r = await fetch('https://formsubmit.co/ajax/' + EMAIL_DEST, {
@@ -392,22 +486,21 @@ $('f').addEventListener('submit', async e => {
     const j = await r.json().catch(() => ({}));
     ok = r.ok && String(j.success) !== 'false';
   } catch (err) { ok = false; }
-  if (AVVISO_WA_APIKEY) {
-    const avviso = `📝 Nuovo questionario Assistify\n${val('nome')} – ${val('attivita')}${val('citta') ? ' (' + val('citta') + ')' : ''}\nSettore: ${D.S ? D.S.n : '-'}\nTel: ${val('cellulare')}\nEmail: ${val('email')}\nPreferisce: ${document.querySelector('input[name=contatto]:checked')?.value || ''}\nRisposte complete nell'email.`;
-    try { await fetch('https://api.callmebot.com/whatsapp.php?phone=' + AVVISO_WA_NUMERO + '&apikey=' + encodeURIComponent(AVVISO_WA_APIKEY) + '&text=' + encodeURIComponent(avviso), {mode:'no-cors'}); } catch (err) {}
-  }
-  if (N8N_WEBHOOK) { try { await fetch(N8N_WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...body, testo: D.txt})}); ok = true; } catch (err) {} }
 
   f.hidden = true;
-  if (ok){
-    $('doneTitle').textContent = `Grazie ${val('nome').split(' ')[0]}, abbiamo ricevuto le tue risposte!`;
-    $('waDone').href = waLink(`Ciao! Sono ${val('nome')} (${val('attivita')}). Ho appena compilato il questionario per la demo gratuita di Assistify.`);
-    $('done').hidden = false; $('done').scrollIntoView({block:'start'});
-  } else {
+  if (ok){ showDone(firstName, val('nome'), val('attivita'), prodotti); }
+  else {
     $('waFail').href = waLink(summary);
     $('fail').hidden = false; $('fail').scrollIntoView({block:'start'});
   }
 });
+function showDone(first, nome, att, prodotti){
+  $('f').hidden = true;
+  $('doneTitle').textContent = `Grazie${first ? ' ' + first : ''}, abbiamo ricevuto le tue risposte!`;
+  $('waDone').href = waLink(`Ciao! Sono ${nome||first}${att ? ' (' + att + ')' : ''}. Ho appena compilato il questionario per la demo gratuita di Assistify${prodotti ? ' (' + prodotti + ')' : ''}.`);
+  $('done').hidden = false; $('done').scrollIntoView({block:'start'});
+}
+if (P.get('grazie')==='1') showDone(P.get('n')||'', P.get('n')||'', P.get('a')||'', P.get('p')||'');
 $('yr').textContent = new Date().getFullYear();
 </script>
 <script>(()=>{const b=document.querySelector('.menu-btn'),m=document.getElementById('mnav');if(!b||!m)return;b.addEventListener('click',()=>{const o=m.hidden;m.hidden=!o;b.setAttribute('aria-expanded',String(o));b.setAttribute('aria-label',o?'Chiudi il menu':'Apri il menu');});m.addEventListener('click',e=>{if(e.target.closest('a')){m.hidden=true;b.setAttribute('aria-expanded','false');}});})();</script>
