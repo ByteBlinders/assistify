@@ -206,11 +206,10 @@ footer a:hover{text-decoration:underline}
 
     <section class="done" id="fail" hidden>
       <div class="card">
-        <h2>Non siamo riusciti a inviare il questionario</h2>
-        <p>Nessun problema: le tue risposte sono pronte, mandacele con uno di questi pulsanti.</p>
+        <h2>Invio non riuscito</h2>
+        <p>C'è stato un problema di connessione. Le tue risposte sono pronte: puoi mandarcele con un tocco su WhatsApp, oppure riprovare tra qualche minuto.</p>
         <div class="actions">
           <a class="btn btn-accent" id="waFail" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Invia su WhatsApp</a>
-          <a class="btn btn-line" id="mailFail" href="#">Invia per email</a>
         </div>
       </div>
     </section>
@@ -228,7 +227,9 @@ footer a:hover{text-decoration:underline}
 /* ⚙️ Impostazioni */
 const EMAIL_DEST = 'info@assistifyitalia.it';            // dove arrivano le risposte (servizio FormSubmit)
 const WHATSAPP = '393297286904';                        // numero Assistify
-const N8N_WEBHOOK = '';                                  // in futuro: webhook n8n per l'avviso WhatsApp automatico
+const N8N_WEBHOOK = '';                                  // in futuro: webhook n8n (server Hetzner)
+const AVVISO_WA_NUMERO = '393297286904';                 // avviso automatico su WhatsApp (CallMeBot)
+const AVVISO_WA_APIKEY = '';                             // chiave CallMeBot: vuota = avviso WhatsApp spento
 
 /* Domande: stesso ordine del Preventivatore Assistify (numerazione 1, 2, 3…) */
 const SETTORI = {
@@ -365,6 +366,10 @@ $('f').addEventListener('submit', async e => {
     const j = await r.json().catch(() => ({}));
     ok = r.ok && String(j.success) !== 'false';
   } catch (err) { ok = false; }
+  if (AVVISO_WA_APIKEY) {
+    const avviso = `📝 Nuovo questionario Assistify\n${val('nome')} – ${val('attivita')}${val('citta') ? ' (' + val('citta') + ')' : ''}\nSettore: ${D.S ? D.S.n : '-'}\nTel: ${val('cellulare')}\nEmail: ${val('email')}\nPreferisce: ${document.querySelector('input[name=contatto]:checked')?.value || ''}\nRisposte complete nell'email.`;
+    try { await fetch('https://api.callmebot.com/whatsapp.php?phone=' + AVVISO_WA_NUMERO + '&apikey=' + encodeURIComponent(AVVISO_WA_APIKEY) + '&text=' + encodeURIComponent(avviso), {mode:'no-cors'}); } catch (err) {}
+  }
   if (N8N_WEBHOOK) { try { await fetch(N8N_WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...body, testo: D.txt})}); ok = true; } catch (err) {} }
 
   f.hidden = true;
@@ -374,7 +379,6 @@ $('f').addEventListener('submit', async e => {
     $('done').hidden = false; $('done').scrollIntoView({block:'start'});
   } else {
     $('waFail').href = waLink(summary);
-    $('mailFail').href = 'mailto:' + EMAIL_DEST + '?subject=' + encodeURIComponent('Questionario demo Assistify: ' + val('attivita')) + '&body=' + encodeURIComponent(summary);
     $('fail').hidden = false; $('fail').scrollIntoView({block:'start'});
   }
 });
