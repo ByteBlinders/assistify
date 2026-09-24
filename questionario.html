@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Richiedi la demo gratuita di 7 giorni di Assistify: rispondi a poche domande sulla tua attività e ti ricontattiamo.">
+<meta name="theme-color" content="#062e29">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Richiedi la demo gratuita · Assistify</title>
+<style>
+:root{
+  --ground:#f6f3ee; --surface:#ffffff; --ink:#0b2a26; --ink-soft:#4d625d; --line:#e2ddd4; --field:#fbfaf7;
+  --brand:#0e5c52; --brand-deep:#062e29; --accent:#f0a262; --accent-deep:#e0773a; --accent-ink:#062e29;
+  --chip:#ebe6dc; --hero-soft:#bfe0d8; --bad:#b3261e; --radius:18px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#071f1c; --surface:#0c2b27; --ink:#eef4f2; --ink-soft:#9fbab3; --line:#1d3f39; --field:#0a2521;
+    --chip:#12352f; --bad:#ff8a80; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#071f1c; --surface:#0c2b27; --ink:#eef4f2; --ink-soft:#9fbab3; --line:#1d3f39; --field:#0a2521;
+  --chip:#12352f; --bad:#ff8a80; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:760px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{margin:0;letter-spacing:-.025em;text-wrap:balance;line-height:1.15}
+p{margin:0}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:700 16px system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;text-decoration:none;padding:15px 24px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:var(--accent-ink)}
+.btn-accent:hover{background:#f4b27a}
+.btn-line{background:transparent;border-color:var(--brand);color:var(--brand)}
+:root[data-theme="dark"] .btn-line{border-color:var(--accent);color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn-line{border-color:var(--accent);color:var(--accent)}}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--brand-deep);border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px;max-width:1120px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:21px;letter-spacing:-.03em}
+.logo svg{width:34px;height:34px;flex-shrink:0}
+.back{color:#cfe6e0;text-decoration:none;font-size:15px;font-weight:600}
+.back:hover{color:#fff}
+
+.hero{background:radial-gradient(110% 90% at 20% 0%,#12776a 0%,#0a4239 45%,var(--brand-deep) 100%);color:#fff;padding-block:48px 56px}
+.hero h1{font-size:clamp(32px,5.4vw,48px);font-weight:800;letter-spacing:-.035em;margin-top:12px}
+.hero .lead{color:var(--hero-soft);margin-top:16px;font-size:clamp(17px,1.8vw,19px);max-width:60ch}
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px;padding:0;list-style:none;counter-reset:p}
+.path li{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 16px;font-size:15px;color:#e3f1ed;counter-increment:p}
+.path li::before{content:counter(p);display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-weight:800;margin-bottom:8px}
+.path b{display:block;color:#fff}
+@media (max-width:640px){.path{grid-template-columns:1fr}}
+
+form{display:grid;gap:18px;padding-block:32px 24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:16px}
+.card h2{font-size:22px;font-weight:800}
+.card .sub{color:var(--ink-soft);font-size:15px;margin-top:-8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:600px){.grid2{grid-template-columns:1fr}}
+.f{display:grid;gap:6px;font-weight:600;font-size:15.5px}
+.f .n{color:var(--accent-deep);font-weight:800;margin-right:4px}
+.f small{font-weight:400;color:var(--ink-soft);font-size:13.5px}
+.req{color:var(--accent-deep)}
+input,select,textarea{font:16px system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
+textarea{min-height:76px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+input:user-invalid,select:user-invalid{border-color:var(--bad)}
+.radios{display:flex;flex-wrap:wrap;gap:8px}
+.radios label{display:flex;align-items:center;gap:8px;background:var(--chip);border-radius:999px;padding:9px 14px;font-weight:600;font-size:15px;cursor:pointer}
+.radios input{width:auto;accent-color:var(--brand)}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--ink-soft)}
+.consent input{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--brand)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.send{display:grid;gap:12px}
+.msg{border-radius:14px;padding:14px 16px;font-size:15.5px}
+.msg.err{background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
+
+.done{padding-block:40px 24px}
+.done .card{text-align:left}
+.done .big{width:56px;height:56px;border-radius:16px;background:var(--brand);display:grid;place-items:center}
+.done .big svg{width:30px;height:30px;color:#fff}
+.done h2{font-size:clamp(26px,4vw,34px)}
+.done p{color:var(--ink-soft)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+
+footer{padding-block:28px 44px;color:var(--ink-soft);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3ad6f"/><stop offset="1" stop-color="#e0773a"/></linearGradient>
+    <symbol id="mark" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="url(#og)"/><g transform="translate(12 12) scale(1.667)" fill="none" stroke="#062e29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M8.5 11.5l2.3 2.3 4.7-4.7"/></g></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="./" aria-label="Assistify, vai alla home"><svg><use href="#mark"/></svg>Assistify</a>
+    <a class="back" href="./">← Torna al sito</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Demo gratuita di 7 giorni</p>
+      <h1>Raccontaci la tua attività: prepariamo la tua demo.</h1>
+      <p class="lead">Bastano pochi minuti. Rispondi a quello che sai: se una domanda non ti è chiara lasciala vuota, ne parliamo quando ti richiamiamo.</p>
+      <ol class="path">
+        <li><b>Compili il questionario</b>Contatti e qualche informazione sulla tua attività.</li>
+        <li><b>Ti ricontattiamo</b>E attiviamo la demo con i tuoi servizi e i tuoi orari, gratis per 7 giorni.</li>
+        <li><b>Preventivo su misura</b>Dopo la prova ti prepariamo una proposta pensata per te.</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <form id="f" novalidate>
+      <div class="card">
+        <h2>I tuoi contatti</h2>
+        <p class="sub">Li usiamo solo per ricontattarti e attivare la demo.</p>
+        <div class="grid2">
+          <label class="f"><span>Nome e cognome <span class="req" aria-hidden="true">*</span></span><input name="nome" id="nome" autocomplete="name" required></label>
+          <label class="f"><span>Nome dell'attività <span class="req" aria-hidden="true">*</span></span><input name="attivita" id="attivita" autocomplete="organization" required></label>
+          <label class="f"><span>Email <span class="req" aria-hidden="true">*</span></span><input name="email" id="email" type="email" autocomplete="email" inputmode="email" required></label>
+          <label class="f"><span>Cellulare <span class="req" aria-hidden="true">*</span></span><input name="cellulare" id="cellulare" type="tel" autocomplete="tel" inputmode="tel" placeholder="+39 …" required pattern="[+0-9 ()./-]{8,}"></label>
+          <label class="f">Città<input name="citta" id="citta" autocomplete="address-level2"></label>
+          <div class="f">Come preferisci essere ricontattato?
+            <div class="radios" role="radiogroup">
+              <label><input type="radio" name="contatto" value="WhatsApp" checked> WhatsApp</label>
+              <label><input type="radio" name="contatto" value="Telefono"> Telefono</label>
+              <label><input type="radio" name="contatto" value="Email"> Email</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>La tua attività</h2>
+        <label class="f"><span>Di cosa ti occupi? <span class="req" aria-hidden="true">*</span></span>
+          <select name="settore" id="settore" required>
+            <option value="">Scegli…</option>
+            <option value="dent">Studio dentistico o medico</option>
+            <option value="est">Centro estetico, parrucchiere o barbiere</option>
+            <option value="rist">Ristorante o bar</option>
+            <option value="fit">Palestra, fisioterapia o corsi</option>
+            <option value="foto">Fotografo o videomaker</option>
+            <option value="altro">Altra attività su appuntamento</option>
+          </select>
+        </label>
+        <div class="grid2">
+          <label class="f">Quanti appuntamenti gestisci circa al mese?<input name="app" id="app" inputmode="numeric" placeholder="es. 300"><small>Anche una stima va bene</small></label>
+          <label class="f">Quante persone o agende ricevono appuntamenti?<input name="op" id="op" inputmode="numeric" placeholder="es. 2"></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Come lavori oggi</h2>
+        <div id="comQ" style="display:grid;gap:16px"></div>
+      </div>
+
+      <div class="card" id="secCard" hidden>
+        <h2 id="secTitle">Domande sulla tua attività</h2>
+        <div id="secQ" style="display:grid;gap:16px"></div>
+      </div>
+
+      <div class="card">
+        <label class="f">Vuoi aggiungere qualcosa?<textarea name="note" id="note" placeholder="Dubbi, richieste particolari, orari in cui preferisci essere chiamato…"></textarea></label>
+        <label class="consent"><input type="checkbox" id="privacy" required><span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento a essere ricontattato da Assistify Tech per la demo e il preventivo. <span class="req" aria-hidden="true">*</span></span></label>
+        <div class="hp" aria-hidden="true"><label>Non compilare<input name="_honey" id="hp" tabindex="-1" autocomplete="off"></label></div>
+        <div class="send">
+          <p class="msg err" id="err" role="alert" hidden></p>
+          <button class="btn btn-accent" type="submit" id="go">Invia e richiedi la demo</button>
+          <p class="sub" style="font-size:14px;color:var(--ink-soft)">I campi con <span class="req">*</span> sono obbligatori. Nessun costo e nessun impegno.</p>
+        </div>
+      </div>
+    </form>
+
+    <section class="done" id="done" hidden>
+      <div class="card">
+        <div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2 id="doneTitle">Grazie, abbiamo ricevuto le tue risposte!</h2>
+        <p>Ti ricontattiamo al più presto per attivare la tua <b>demo gratuita di 7 giorni</b>. Dopo la prova ti prepariamo un preventivo su misura.</p>
+        <p>Se vuoi fare prima, avvisaci anche su WhatsApp:</p>
+        <div class="actions">
+          <a class="btn btn-accent" id="waDone" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Scrivici su WhatsApp</a>
+          <a class="btn btn-line" href="./">Torna al sito</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="done" id="fail" hidden>
+      <div class="card">
+        <h2>Non siamo riusciti a inviare il questionario</h2>
+        <p>Nessun problema: le tue risposte sono pronte, mandacele con uno di questi pulsanti.</p>
+        <div class="actions">
+          <a class="btn btn-accent" id="waFail" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Invia su WhatsApp</a>
+          <a class="btn btn-line" id="mailFail" href="#">Invia per email</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Assistify Tech · <a href="mailto:info@assistifyitalia.it">info@assistifyitalia.it</a></span>
+    <span style="display:flex;gap:20px"><a href="privacy.html">Privacy e cookie</a><a href="terms-of-service.html">Termini</a></span>
+  </div>
+</footer>
+
+<script>
+/* ⚙️ Impostazioni */
+const EMAIL_DEST = 'info@assistifyitalia.it';            // dove arrivano le risposte (servizio FormSubmit)
+const WHATSAPP = '393297286904';                        // numero Assistify
+const N8N_WEBHOOK = '';                                  // in futuro: webhook n8n per l'avviso WhatsApp automatico
+
+/* Domande: stesso ordine del Preventivatore Assistify (numerazione 1, 2, 3…) */
+const SETTORI = {
+  dent:{n:'Studio dentistico o medico', q:[
+    'Quali prestazioni si possono prenotare e quanto durano? (prima visita, controllo, igiene…)',
+    'Ci sono prestazioni da non far prenotare in automatico? (es. chirurgia, preventivi complessi)',
+    'Come gestisci le urgenze?',
+    'Pazienti nuovi e già in cura hanno percorsi diversi? (es. prima visita più lunga)',
+    'Ci sono più poltrone o medici con agende separate?',
+    'Hai già un\'informativa privacy per i pazienti?']},
+  est:{n:'Centro estetico, parrucchiere o barbiere', q:[
+    'Quali servizi offri, con durata e prezzo? (anche combinati, es. taglio + piega)',
+    'Il cliente può scegliere l\'operatore o l\'operatrice?',
+    'Chiedi un acconto o una caparra?',
+    'Hai pacchetti o abbonamenti? (es. 10 sedute)',
+    'Entro quanto tempo si può disdire senza penale?',
+    'Fai promozioni stagionali da comunicare ai clienti?']},
+  rist:{n:'Ristorante o bar', q:[
+    'Quanti coperti e tavoli hai per turno?',
+    'Turni e orari di prenotazione (pranzo, cena, doppio turno)',
+    'Da quante persone in su vuoi confermare tu la prenotazione?',
+    'Cosa vuoi sapere dal cliente? (allergie, seggiolone, dentro o fuori)',
+    'Organizzi eventi o serate con menu fisso?',
+    'Come gestisci chi non si presenta? (carta a garanzia, conferma il giorno stesso)']},
+  fit:{n:'Palestra, fisioterapia o corsi', q:[
+    'Lezioni di gruppo con posti limitati o sedute individuali?',
+    'Calendario settimanale dei corsi e posti disponibili',
+    'Offri una lezione di prova gratuita?',
+    'Ci sono abbonamenti o sedute residue da controllare?',
+    'Serve un certificato o un modulo prima della prima seduta?',
+    'Vuoi una lista d\'attesa quando un corso è pieno?']},
+  foto:{n:'Fotografo o videomaker', q:[
+    'Quali servizi si possono prenotare, con durata e prezzo indicativo? (ritratto, book, famiglia, prodotto, video…)',
+    'Lavori in studio, in esterna o a domicilio? Quale zona copri?',
+    'Matrimoni ed eventi: blocchi subito la data o preferisci prima una chiamata conoscitiva?',
+    'Chiedi un acconto per confermare la data?',
+    'Cosa ti serve sapere prima dello shooting? (persone, location, stile, riferimenti)',
+    'Tempi di consegna, numero di foto o durata del video, galleria online',
+    'Dove si possono vedere i tuoi lavori? (Instagram, sito, galleria)']},
+  altro:{n:'Altra attività su appuntamento', q:[
+    'Quali servizi si prenotano e quanto durano?',
+    'Ti servono informazioni dal cliente prima dell\'appuntamento?',
+    'Appuntamenti in sede, a domicilio o online?',
+    'Le prenotazioni si confermano da sole o le approvi tu?']}
+};
+const COMUNI = [
+  'Come ti prenotano oggi i clienti? (telefono, WhatsApp, Instagram, di persona)',
+  'Che numero WhatsApp vorresti usare per le prenotazioni? È già su WhatsApp Business?',
+  'Hai una pagina Facebook, un profilo Instagram o un account Meta Business?',
+  'Che calendario usi oggi? (Google Calendar, gestionale, agenda di carta)',
+  'Orari di apertura, pause e chiusure (ferie, festivi)',
+  'Chi deve ricevere l\'avviso di una nuova prenotazione? (email, WhatsApp)',
+  'Promemoria ai clienti: il giorno prima, 2 ore prima o entrambi?',
+  'Che tono preferisci nei messaggi: formale (Lei) o informale (tu)? Serve anche un\'altra lingua?',
+  'Indirizzo, parcheggio, link Google Maps e sito da dare ai clienti'
+];
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const val = id => ($(id)?.value || '').trim();
+
+function field(num, q){
+  return `<label class="f"><span><span class="n">${num}.</span>${esc(q)}</span><textarea data-q="${num}"></textarea></label>`;
+}
+function renderQuestions(){
+  const s = $('settore').value;
+  const keep = {}; document.querySelectorAll('textarea[data-q]').forEach(t => keep[t.dataset.q + '|' + t.closest('.card').id] = t.value);
+  $('comQ').innerHTML = COMUNI.map((q,i) => field(i+1, q)).join('');
+  if (SETTORI[s]){
+    $('secCard').hidden = false;
+    $('secTitle').textContent = 'Domande per ' + SETTORI[s].n.toLowerCase().replace(/^./, c => c.toUpperCase());
+    $('secQ').innerHTML = SETTORI[s].q.map((q,i) => field(COMUNI.length + i + 1, q)).join('');
+  } else { $('secCard').hidden = true; $('secQ').innerHTML = ''; }
+  document.querySelectorAll('textarea[data-q]').forEach(t => { const k = t.dataset.q + '|' + t.closest('.card').id; if (keep[k]) t.value = keep[k]; });
+}
+
+function collect(){
+  const s = $('settore').value, S = SETTORI[s];
+  const answers = {};
+  document.querySelectorAll('textarea[data-q]').forEach(t => answers[+t.dataset.q] = t.value.trim());
+  const qs = [...COMUNI, ...(S ? S.q : [])];
+  let txt = `Risposte questionario Assistify (cod. ${s||'altro'})\n`;
+  txt += `A. ${val('attivita')}${val('citta') ? ', ' + val('citta') : ''}\nB. ${val('app')}\nC. ${val('op')}\n`;
+  qs.forEach((q,i) => txt += `${i+1}. ${answers[i+1] || '-'}\n`);
+  if (val('note')) txt += `Note: ${val('note')}\n`;
+  const contatti = `Nome: ${val('nome')}\nEmail: ${val('email')}\nCellulare: ${val('cellulare')}\nPreferisce: ${document.querySelector('input[name=contatto]:checked')?.value || ''}`;
+  return {s, S, qs, answers, txt, contatti};
+}
+
+function waLink(text){ return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(text); }
+
+$('settore').addEventListener('change', renderQuestions);
+renderQuestions();
+
+// Precompilazione dal link: questionario.html?s=foto&a=Nome%20attività&n=Nome
+const P = new URLSearchParams(location.search);
+if (P.get('s') && SETTORI[P.get('s')]) { $('settore').value = P.get('s'); renderQuestions(); }
+if (P.get('a')) $('attivita').value = P.get('a');
+if (P.get('n')) $('nome').value = P.get('n');
+if (P.get('c')) $('citta').value = P.get('c');
+
+$('f').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('err').hidden = true;
+  const f = $('f');
+  if (!f.checkValidity()){
+    const bad = f.querySelector(':invalid');
+    $('err').textContent = bad?.id === 'privacy' ? 'Per inviare devi accettare l\'informativa privacy.' : 'Controlla i campi obbligatori: nome, attività, email, cellulare e tipo di attività.';
+    $('err').hidden = false; bad?.focus(); return;
+  }
+  if ($('hp').value) return; // spam
+  const D = collect();
+  const body = {
+    _subject: 'Nuova richiesta demo: ' + val('attivita'),
+    _template: 'table',
+    _captcha: 'false',
+    _replyto: val('email'),
+    'Nome': val('nome'), 'Attività': val('attivita'), 'Città': val('citta'),
+    'Email': val('email'), 'Cellulare': val('cellulare'),
+    'Contatto preferito': document.querySelector('input[name=contatto]:checked')?.value || '',
+    'Settore': D.S ? D.S.n : '', 'Appuntamenti al mese': val('app'), 'Persone o agende': val('op')
+  };
+  D.qs.forEach((q,i) => body[`${i+1}. ${q}`] = D.answers[i+1] || '-');
+  body['Note'] = val('note') || '-';
+  body['Testo per il Preventivatore'] = D.txt;
+
+  const summary = `Ciao! Ho compilato il questionario per la demo di Assistify.\n${D.contatti}\n\n${D.txt}`;
+  $('go').disabled = true; $('go').textContent = 'Invio in corso…';
+  let ok = false;
+  try {
+    const r = await fetch('https://formsubmit.co/ajax/' + EMAIL_DEST, {
+      method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(body)
+    });
+    const j = await r.json().catch(() => ({}));
+    ok = r.ok && String(j.success) !== 'false';
+  } catch (err) { ok = false; }
+  if (N8N_WEBHOOK) { try { await fetch(N8N_WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...body, testo: D.txt})}); ok = true; } catch (err) {} }
+
+  f.hidden = true;
+  if (ok){
+    $('doneTitle').textContent = `Grazie ${val('nome').split(' ')[0]}, abbiamo ricevuto le tue risposte!`;
+    $('waDone').href = waLink(`Ciao! Sono ${val('nome')} di ${val('attivita')}, ho appena compilato il questionario per la demo di Assistify.`);
+    $('done').hidden = false; $('done').scrollIntoView({block:'start'});
+  } else {
+    $('waFail').href = waLink(summary);
+    $('mailFail').href = 'mailto:' + EMAIL_DEST + '?subject=' + encodeURIComponent('Questionario demo Assistify: ' + val('attivita')) + '&body=' + encodeURIComponent(summary);
+    $('fail').hidden = false; $('fail').scrollIntoView({block:'start'});
+  }
+});
+$('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
