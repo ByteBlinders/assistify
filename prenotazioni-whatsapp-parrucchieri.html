@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prenotazioni WhatsApp per parrucchieri | Assistify</title>
+<meta name="description" content="Il tuo salone prenota su WhatsApp anche mentre lavori: il cliente sceglie servizio, operatore e orario libero, riceve conferma e promemoria. Demo gratis 7 giorni.">
+<link rel="canonical" href="https://assistifyitalia.it/prenotazioni-whatsapp-parrucchieri.html">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Assistify">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Prenotazioni su WhatsApp per parrucchieri e barbieri">
+<meta property="og:description" content="Il tuo salone prenota su WhatsApp anche mentre lavori: il cliente sceglie servizio, operatore e orario libero, riceve conferma e promemoria. Demo gratis 7 giorni.">
+<meta property="og:url" content="https://assistifyitalia.it/prenotazioni-whatsapp-parrucchieri.html">
+<meta property="og:image" content="https://assistifyitalia.it/demo-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#062e29">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --ground:#f6f3ee; --surface:#ffffff; --ink:#0b2a26; --ink-soft:#4d625d; --line:#e2ddd4; --field:#fbfaf7;
+  --brand:#0e5c52; --brand-deep:#062e29; --accent:#f0a262; --accent-deep:#e0773a; --accent-ink:#062e29;
+  --chip:#ebe6dc; --hero-soft:#bfe0d8; --bad:#b3261e; --radius:18px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#071f1c; --surface:#0c2b27; --ink:#eef4f2; --ink-soft:#9fbab3; --line:#1d3f39; --field:#0a2521;
+    --chip:#12352f; --bad:#ff8a80; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#071f1c; --surface:#0c2b27; --ink:#eef4f2; --ink-soft:#9fbab3; --line:#1d3f39; --field:#0a2521;
+  --chip:#12352f; --bad:#ff8a80; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:760px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{margin:0;letter-spacing:-.025em;text-wrap:balance;line-height:1.15}
+p{margin:0}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:700 16px system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;text-decoration:none;padding:15px 24px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:var(--accent-ink)}
+.btn-accent:hover{background:#f4b27a}
+.btn-line{background:transparent;border-color:var(--brand);color:var(--brand)}
+:root[data-theme="dark"] .btn-line{border-color:var(--accent);color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn-line{border-color:var(--accent);color:var(--accent)}}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--brand-deep);border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px;max-width:1120px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:21px;letter-spacing:-.03em}
+.logo svg{width:34px;height:34px;flex-shrink:0}
+.back{color:#cfe6e0;text-decoration:none;font-size:15px;font-weight:600}
+.back:hover{color:#fff}
+
+.hero{background:radial-gradient(110% 90% at 20% 0%,#12776a 0%,#0a4239 45%,var(--brand-deep) 100%);color:#fff;padding-block:48px 56px}
+.hero h1{font-size:clamp(32px,5.4vw,48px);font-weight:800;letter-spacing:-.035em;margin-top:12px}
+.hero .lead{color:var(--hero-soft);margin-top:16px;font-size:clamp(17px,1.8vw,19px);max-width:60ch}
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px;padding:0;list-style:none;counter-reset:p}
+.path li{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 16px;font-size:15px;color:#e3f1ed;counter-increment:p}
+.path li::before{content:counter(p);display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-weight:800;margin-bottom:8px}
+.path b{display:block;color:#fff}
+@media (max-width:640px){.path{grid-template-columns:1fr}}
+
+form{display:grid;gap:18px;padding-block:32px 24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:16px}
+.card h2{font-size:22px;font-weight:800}
+.card .sub{color:var(--ink-soft);font-size:15px;margin-top:-8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:600px){.grid2{grid-template-columns:1fr}}
+.f{display:grid;gap:6px;font-weight:600;font-size:15.5px}
+.f .n{color:var(--accent-deep);font-weight:800;margin-right:4px}
+.f small{font-weight:400;color:var(--ink-soft);font-size:13.5px}
+.req{color:var(--accent-deep)}
+input,select,textarea{font:16px system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
+textarea{min-height:76px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+input:user-invalid,select:user-invalid{border-color:var(--bad)}
+.radios{display:flex;flex-wrap:wrap;gap:8px}
+.radios label{display:flex;align-items:center;gap:8px;background:var(--chip);border-radius:999px;padding:9px 14px;font-weight:600;font-size:15px;cursor:pointer}
+.radios input{width:auto;accent-color:var(--brand)}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--ink-soft)}
+.consent input{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--brand)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.send{display:grid;gap:12px}
+.msg{border-radius:14px;padding:14px 16px;font-size:15.5px}
+.msg.err{background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
+
+.done{padding-block:40px 24px}
+.done .card{text-align:left}
+.done .big{width:56px;height:56px;border-radius:16px;background:var(--brand);display:grid;place-items:center}
+.done .big svg{width:30px;height:30px;color:#fff}
+.done h2{font-size:clamp(26px,4vw,34px)}
+.done p{color:var(--ink-soft)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+
+footer{padding-block:28px 44px;color:var(--ink-soft);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (max-width:640px){.feats{grid-template-columns:1fr}}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:grid;gap:6px}
+.feat b{font-size:17px}
+.feat p{color:var(--ink-soft);font-size:15.5px}
+.feat .ic{width:40px;height:40px;border-radius:11px;background:var(--chip);display:grid;place-items:center;color:var(--brand)}
+:root[data-theme="dark"] .feat .ic{color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .feat .ic{color:var(--accent)}}
+.feat .ic svg{width:22px;height:22px}
+.sec{padding-block:40px 8px;display:grid;gap:18px}
+.sec h2{font-size:clamp(24px,3.6vw,32px);font-weight:800}
+.sec .lead{color:var(--ink-soft);max-width:62ch}
+.who{display:flex;flex-wrap:wrap;gap:10px}
+.who span{background:var(--surface);border:1px solid var(--line);padding:9px 15px;border-radius:999px;font-weight:600;font-size:15px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn-ghost{border-color:rgba(255,255,255,.35);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.cta{background:radial-gradient(100% 120% at 80% 0%,#12776a,var(--brand-deep) 70%);color:#fff;border-radius:24px;padding:clamp(26px,5vw,44px);display:grid;gap:14px;margin-block:40px 10px}
+.cta p{color:var(--hero-soft)}
+.cta .actions{display:flex;flex-wrap:wrap;gap:10px}
+
+.steps4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.steps4{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.steps4{grid-template-columns:1fr}}
+.mock{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start}
+@media (max-width:760px){.mock{grid-template-columns:1fr}}
+.mwin,.mdoc{background:#fff;color:#1b1d22;border-radius:16px;overflow:hidden;box-shadow:0 18px 50px rgba(6,46,41,.18);border:1px solid var(--line)}
+.mbar{background:#1f2430;display:flex;align-items:center;gap:6px;padding:10px 12px}
+.mbar span{width:10px;height:10px;border-radius:50%;background:#ffffff33}
+.mbar em{font-style:normal;color:#fff;font-size:13px;font-weight:600;margin-left:8px}
+.mbody,.mdb{padding:16px;display:grid;gap:2px}
+.mtabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.mtabs i{font-style:normal;font-size:12.5px;font-weight:600;border:1px solid #e3e1dc;border-radius:999px;padding:4px 10px}
+.mtabs i.on{background:#1f2430;color:#fff;border-color:#1f2430}
+.mrow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eeece7;font-size:14.5px}
+.mrow b{white-space:nowrap}
+.mrow.tot{font-weight:800;font-size:16px;border-bottom:0}
+.mrow.soft{color:#626672}
+.mrow.good b{color:#1d7a4a}
+.mrow.gold{border-top:3px solid #c8a45a}
+.mhead{background:#1f2430;color:#fff;display:flex;gap:12px;align-items:center;padding:16px}
+.mhead small{display:block;opacity:.8;font-size:12.5px}
+.mlogo{width:40px;height:40px;border-radius:10px;background:#ffffff1f;display:grid;place-items:center;font-weight:800}
+.mt{font-size:18px}.mdb small{color:#626672;margin-bottom:8px}
+.mbtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.mbtns span{font-size:13px;font-weight:700;border-radius:8px;padding:8px 12px}
+.mb1{background:#1f2430;color:#fff}.mb2{border:1px solid #e3e1dc}
+
+/* menu principale */
+.nav{display:flex;align-items:center;gap:22px}
+.nav a{color:#cfe6e0;text-decoration:none;font-size:15px;font-weight:600}
+.nav a:hover,.nav a[aria-current="page"]:not(.btn){color:#fff}
+.nav a[aria-current="page"]:not(.btn){box-shadow:inset 0 -2px 0 var(--accent);padding-block:4px}
+.nav .btn{padding:9px 16px;font-size:14px;color:var(--accent-ink);white-space:nowrap}
+.menu-btn{display:none;background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;width:42px;height:40px;place-items:center;cursor:pointer}
+.mnav{background:var(--brand-deep);border-top:1px solid rgba(255,255,255,.08);padding:8px 20px 16px;display:grid;gap:4px}
+.mnav a{color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mnav a small{display:block;font-weight:500;font-size:13.5px;color:var(--hero-soft)}
+@media (max-width:820px){.nav a:not(.btn){display:none}.menu-btn{display:grid}.nav{gap:10px}.nav .btn{padding:8px 12px;font-size:13.5px}}
+@media (min-width:821px){.mnav{display:none!important}}
+@media (max-width:380px){.nav .btn{display:none}}
+
+.chatbox{background:#efeae2;border-radius:18px;padding:16px;display:grid;gap:8px;font-size:15px;line-height:1.45;color:#111b21;max-width:460px}
+.cb{max-width:88%;padding:9px 12px;border-radius:12px;box-shadow:0 1px .5px rgba(0,0,0,.12)}
+.cb.in{background:#fff;border-top-left-radius:3px}
+.cb.out{background:#d9fdd3;justify-self:end;border-top-right-radius:3px}
+.cb small{display:block;color:#667781;font-size:12.5px;margin-top:3px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.pain{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:760px){.pain{grid-template-columns:1fr}}
+.pain div{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.pain b{display:block;font-size:17px;margin-bottom:4px}
+.pain p{color:var(--ink-soft);font-size:15.5px}
+.faq{display:grid;gap:10px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 18px}
+.faq summary{cursor:pointer;font-weight:700;padding:13px 0}
+.faq details p{color:var(--ink-soft);padding-bottom:14px;font-size:16px}
+.related{display:flex;flex-wrap:wrap;gap:10px}
+.related a{background:var(--surface);border:1px solid var(--line);padding:9px 15px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none}
+.crumbs{font-size:13.5px;color:var(--hero-soft);margin-bottom:6px}
+.crumbs a{color:var(--hero-soft)}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "name": "Prenotazioni su WhatsApp per parrucchieri e barbieri", "serviceType": "Chatbot WhatsApp per prenotazioni di parrucchieri e barbieri", "provider": {"@type": "Organization", "name": "Assistify Tech", "url": "https://assistifyitalia.it/"}, "areaServed": {"@type": "Country", "name": "Italia"}, "url": "https://assistifyitalia.it/prenotazioni-whatsapp-parrucchieri.html", "description": "Il tuo salone prenota su WhatsApp anche mentre lavori: il cliente sceglie servizio, operatore e orario libero, riceve conferma e promemoria. Demo gratis 7 giorni."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Devo cambiare numero di telefono?", "acceptedAnswer": {"@type": "Answer", "text": "No: si può usare il numero del salone su WhatsApp Business oppure un numero nuovo dedicato. Ne parliamo insieme durante la demo."}}, {"@type": "Question", "name": "I miei clienti devono scaricare un'app?", "acceptedAnswer": {"@type": "Answer", "text": "No, usano WhatsApp come fanno già ogni giorno."}}, {"@type": "Question", "name": "Funziona con il calendario che uso?", "acceptedAnswer": {"@type": "Answer", "text": "Funziona con Google Calendar. Se usi un gestionale per saloni verifichiamo insieme se si può collegare."}}, {"@type": "Question", "name": "Quanto costa?", "acceptedAnswer": {"@type": "Answer", "text": "Dipende da servizi, operatori e funzioni che ti servono: dopo la demo gratuita di 7 giorni ti prepariamo un preventivo su misura."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Assistify", "item": "https://assistifyitalia.it/"}, {"@type": "ListItem", "position": 2, "name": "Parrucchieri e barbieri", "item": "https://assistifyitalia.it/prenotazioni-whatsapp-parrucchieri.html"}]}]}</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3ad6f"/><stop offset="1" stop-color="#e0773a"/></linearGradient>
+    <symbol id="mark" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="url(#og)"/><g transform="translate(12 12) scale(1.667)" fill="none" stroke="#062e29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M8.5 11.5l2.3 2.3 4.7-4.7"/></g></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="./" aria-label="Assistify, vai alla home"><svg><use href="#mark"/></svg>Assistify</a>
+    <nav class="nav" aria-label="Menu principale">
+      <a href="./">Chatbot WhatsApp</a>
+      <a href="preventivatore.html">Preventivi</a>
+      <a href="./#faq">Domande</a>
+      <a class="btn btn-accent" href="questionario.html?s=est">Richiedi una demo</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Apri il menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </nav>
+  </div>
+  <div class="mnav" id="mnav" hidden>
+    <a href="./">Chatbot WhatsApp<small>Prenotazioni automatiche su WhatsApp</small></a>
+    <a href="preventivatore.html">Preventivi<small>Il preventivatore con il tuo marchio</small></a>
+    <a href="questionario.html?s=est">Richiedi una demo<small>Compila il questionario</small></a>
+    <a href="./#faq">Domande frequenti</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="crumbs"><a href="./">Assistify</a> › Parrucchieri e barbieri</p>
+      <p class="eyebrow">Per parrucchieri e barbieri</p>
+      <h1>Prenotazioni su WhatsApp per parrucchieri e barbieri</h1>
+      <p class="lead">Mentre hai le forbici in mano, i clienti ti scrivono per un taglio. Assistify risponde al posto tuo su WhatsApp, propone solo gli orari davvero liberi e ti ritrovi l&#x27;appuntamento già in agenda.</p>
+      <div class="ctas">
+        <a class="btn btn-accent" href="questionario.html?s=est">Richiedi la demo gratuita di 7 giorni</a>
+        <a class="btn btn-ghost" href="https://wa.me/393297286904?text=Ciao%2C%20ho%20un%20salone%20e%20vorrei%20la%20demo%20gratuita%20di%20Assistify" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="sec">
+      <h2>Ti riconosci?</h2>
+      <div class="pain"><div><b>Il telefono squilla mentre lavori</b><p>Rispondere vuol dire fermarti a metà piega; non rispondere vuol dire perdere il cliente.</p></div><div><b>Messaggi la sera e la domenica</b><p>Le richieste arrivano quando il salone è chiuso e restano lì fino al giorno dopo.</p></div><div><b>Buchi in agenda</b><p>Chi dimentica l&#x27;appuntamento lascia una poltrona vuota che potevi dare a qualcun altro.</p></div></div>
+    </section>
+
+    <section class="sec">
+      <div class="two">
+        <div style="display:grid;gap:14px">
+          <h2>Come prenota un tuo cliente</h2>
+          <p class="lead">Il cliente scrive al numero WhatsApp del salone. Sceglie il servizio dal menu, l&#x27;operatore se vuole, e vede solo gli orari liberi. Conferma con un tocco: tu ricevi l&#x27;avviso e l&#x27;appuntamento finisce nel calendario. Il giorno prima gli arriva il promemoria.</p>
+        </div>
+        <div class="chatbox" aria-label="Esempio di conversazione"><div class="cb out">Ciao, domani avete posto per taglio e barba?</div><div class="cb in">Ciao! Per Taglio + barba (45 min) domani ho libero: 10:30 · 15:00 · 18:15. Con chi preferisci? Marco o Luca</div><div class="cb out">18:15 con Luca</div><div class="cb in">Fatto ✅ Domani alle 18:15 con Luca. Ti mando un promemoria la mattina. Per spostare o disdire scrivimi qui.</div></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>Pensato per il lavoro in salone</h2>
+      <div class="feats"><div class="feat"><b>Servizi combinati</b><p>Taglio + piega, colore + taglio: le durate si sommano e l&#x27;agenda si occupa nel modo giusto.</p></div><div class="feat"><b>Scelta dell&#x27;operatore</b><p>Un&#x27;agenda per ogni collaboratore: il cliente sceglie con chi prenotare, oppure il primo libero.</p></div><div class="feat"><b>Promemoria automatici</b><p>Il giorno prima e qualche ora prima, così le poltrone vuote diminuiscono.</p></div><div class="feat"><b>Spostamenti e disdette</b><p>Il cliente sposta o disdice da solo e l&#x27;orario torna subito disponibile.</p></div><div class="feat"><b>Risposte alle domande</b><p>Orari, prezzi, servizi e indirizzo: risponde anche alle domande più comuni.</p></div><div class="feat"><b>Un umano quando serve</b><p>Per richieste particolari la conversazione passa a te o a chi lavora in salone.</p></div></div>
+    </section>
+
+    <section class="sec">
+      <h2>Domande frequenti</h2>
+      <div class="faq"><details><summary>Devo cambiare numero di telefono?</summary><p>No: si può usare il numero del salone su WhatsApp Business oppure un numero nuovo dedicato. Ne parliamo insieme durante la demo.</p></details><details><summary>I miei clienti devono scaricare un&#x27;app?</summary><p>No, usano WhatsApp come fanno già ogni giorno.</p></details><details><summary>Funziona con il calendario che uso?</summary><p>Funziona con Google Calendar. Se usi un gestionale per saloni verifichiamo insieme se si può collegare.</p></details><details><summary>Quanto costa?</summary><p>Dipende da servizi, operatori e funzioni che ti servono: dopo la demo gratuita di 7 giorni ti prepariamo un preventivo su misura.</p></details></div>
+    </section>
+
+    <section class="cta">
+      <h2 style="font-size:clamp(24px,3.6vw,32px)">Vuoi vederlo con i servizi del tuo salone?</h2>
+      <p>Compila il questionario: prepariamo la demo con i tuoi servizi, i tuoi orari e i tuoi collaboratori, gratis per 7 giorni.</p>
+      <div class="actions">
+        <a class="btn btn-accent" href="questionario.html?s=est">Richiedi la demo gratuita</a>
+        <a class="btn btn-ghost" href="https://wa.me/393297286904?text=Ciao%2C%20ho%20un%20salone%20e%20vorrei%20la%20demo%20gratuita%20di%20Assistify" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+      </div>
+    </section>
+
+    <section class="sec" style="padding-bottom:32px">
+      <h2 style="font-size:20px">Assistify per altre attività</h2>
+      <div class="related"><a href="chatbot-whatsapp-centro-estetico.html">Centri estetici</a><a href="prenotazioni-whatsapp-studio-dentistico.html">Studi dentistici e medici</a><a href="promemoria-appuntamenti-whatsapp.html">Promemoria appuntamenti</a><a href="preventivi-fotografi.html">Preventivi per fotografi</a></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Assistify Tech · <a href="mailto:info@assistifyitalia.it">info@assistifyitalia.it</a></span>
+    <span style="display:flex;gap:20px"><a href="privacy.html">Privacy e cookie</a><a href="terms-of-service.html">Termini</a></span>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script>(()=>{const b=document.querySelector('.menu-btn'),m=document.getElementById('mnav');if(!b||!m)return;b.addEventListener('click',()=>{const o=m.hidden;m.hidden=!o;b.setAttribute('aria-expanded',String(o));b.setAttribute('aria-label',o?'Chiudi il menu':'Apri il menu');});m.addEventListener('click',e=>{if(e.target.closest('a')){m.hidden=true;b.setAttribute('aria-expanded','false');}});})();</script>
+</body>
+</html>
