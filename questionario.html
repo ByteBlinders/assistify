@@ -3,12 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Richiedi la demo gratuita di 7 giorni di Assistify: rispondi a poche domande sulla tua attività e ti ricontattiamo.">
 <meta name="theme-color" content="#062e29">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>Richiedi la demo gratuita · Assistify</title>
+<title>Richiedi la demo gratuita di 7 giorni | Assistify</title>
+<meta name="description" content="Rispondi a poche domande sulla tua attività e ricevi la demo gratuita di 7 giorni del chatbot WhatsApp o del preventivatore Assistify.">
+<link rel="canonical" href="https://assistifyitalia.it/questionario.html">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self' https://formsubmit.co https://api.callmebot.com; form-action https://formsubmit.co; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Assistify">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Richiedi la demo gratuita di 7 giorni | Assistify">
+<meta property="og:description" content="Rispondi a poche domande sulla tua attività e ricevi la demo gratuita di 7 giorni del chatbot WhatsApp o del preventivatore Assistify.">
+<meta property="og:url" content="https://assistifyitalia.it/questionario.html">
+<meta property="og:image" content="https://assistifyitalia.it/demo-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 :root{
   --ground:#f6f3ee; --surface:#ffffff; --ink:#0b2a26; --ink-soft:#4d625d; --line:#e2ddd4; --field:#fbfaf7;
@@ -476,7 +487,7 @@ $('f').addEventListener('submit', async e => {
     const bytes=await buildPdf('Richiesta demo · '+prodotti+' · '+new Date().toLocaleDateString('it-IT'),sections,prev?logo:null);
     const pdfFile=new File([bytes],'Richiesta_demo_'+(val('attivita')||'cliente').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').slice(0,40)+'.pdf',{type:'application/pdf'});
     const back = new URL(location.href.split('?')[0]);
-    back.searchParams.set('grazie','1'); back.searchParams.set('n',firstName); back.searchParams.set('a',val('attivita')); back.searchParams.set('p',prodotti);
+    back.searchParams.set('grazie','1'); back.searchParams.set('p',prodotti);
     const hf = document.createElement('form');
     hf.method='POST'; hf.enctype='multipart/form-data'; hf.action='https://formsubmit.co/' + EMAIL_DEST; hf.hidden=true;
     Object.entries({...body, _next: back.href}).forEach(([k,v])=>{const i=document.createElement('input');i.type='hidden';i.name=k;i.value=v;hf.appendChild(i);});
@@ -559,10 +570,10 @@ async function buildPdf(title,sections,logoFile){
 function showDone(first, nome, att, prodotti){
   $('f').hidden = true;
   $('doneTitle').textContent = `Grazie${first ? ' ' + first : ''}, abbiamo ricevuto le tue risposte!`;
-  $('waDone').href = waLink(`Ciao! Sono ${nome||first}${att ? ' (' + att + ')' : ''}. Ho appena compilato il questionario per la demo gratuita di Assistify${prodotti ? ' (' + prodotti + ')' : ''}.`);
+  $('waDone').href = waLink(`Ciao!${(nome||first) ? ' Sono ' + (nome||first) + (att ? ' (' + att + ')' : '') + '.' : ''} Ho appena compilato il questionario per la demo gratuita di Assistify${prodotti ? ' (' + prodotti + ')' : ''}.`);
   $('done').hidden = false; $('done').scrollIntoView({block:'start'});
 }
-if (P.get('grazie')==='1') showDone(P.get('n')||'', P.get('n')||'', P.get('a')||'', P.get('p')||'');
+if (P.get('grazie')==='1') showDone('', '', '', P.get('p')||'');
 $('yr').textContent = new Date().getFullYear();
 </script>
 <script>(()=>{const b=document.querySelector('.menu-btn'),m=document.getElementById('mnav');if(!b||!m)return;b.addEventListener('click',()=>{const o=m.hidden;m.hidden=!o;b.setAttribute('aria-expanded',String(o));b.setAttribute('aria-label',o?'Chiudi il menu':'Apri il menu');});m.addEventListener('click',e=>{if(e.target.closest('a')){m.hidden=true;b.setAttribute('aria-expanded','false');}});})();</script>
