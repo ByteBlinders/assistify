@@ -515,15 +515,21 @@ async function logoJpeg(file){
   if(!file)return null;
   try{const img=new Image();img.src=URL.createObjectURL(file);await img.decode();const k=Math.min(1,300/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*k));c.height=Math.max(1,Math.round(img.height*k));const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);const b=atob(c.toDataURL('image/jpeg',0.9).split(',')[1]);return {w:c.width,h:c.height,data:b};}catch(e){return null;}
 }
+const BRAND_SVG='<svg xmlns="http://www.w3.org/2000/svg" width="184" height="184" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3ad6f"/><stop offset="1" stop-color="#e0773a"/></linearGradient></defs><rect width="64" height="64" fill="#0e5c52"/><rect width="64" height="64" rx="18" fill="url(#g)"/><g transform="translate(12 12) scale(1.667)" fill="none" stroke="#062e29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M8.5 11.5l2.3 2.3 4.7-4.7"/></g></svg>';
+async function brandJpeg(){
+  try{const img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(BRAND_SVG);await img.decode();const c=document.createElement('canvas');c.width=184;c.height=184;const x=c.getContext('2d');x.fillStyle='#0e5c52';x.fillRect(0,0,184,184);x.drawImage(img,0,0,184,184);return {w:184,h:184,data:atob(c.toDataURL('image/jpeg',0.92).split(',')[1])};}catch(e){return null;}
+}
 async function buildPdf(title,sections,logoFile){
   const W=595,H=842,M=50,CW=W-2*M;const pages=[];let ops=[],y=H-M;
   const newPage=()=>{pages.push(ops);ops=[];y=H-M;};
   const text=(s,size,bold,x=M)=>{ops.push(`BT /${bold?'F2':'F1'} ${size} Tf ${x} ${y.toFixed(1)} Td (${pdfEsc(s)}) Tj ET`);};
   const need=h=>{if(y-h<M)newPage();};
   const logo=await logoJpeg(logoFile);
+  const brand=await brandJpeg();
   // intestazione
   ops.push('0.055 0.361 0.322 rg',`0 ${H-90} ${W} 90 re f`,'1 1 1 rg');
-  y=H-48;text('Assistify',22,true);y=H-70;text(title,12,false);ops.push('0 0 0 rg');
+  const tx=brand?M+58:M;if(brand)ops.push(`q 46 0 0 46 ${M} ${H-68} cm /Im2 Do Q`);
+  y=H-48;text('Assistify',22,true,tx);y=H-70;text(title,12,false,tx);ops.push('0 0 0 rg');
   if(logo){const s=Math.min(70/logo.w,70/logo.h),w=logo.w*s,h=logo.h*s;ops.push(`q ${w.toFixed(1)} 0 0 ${h.toFixed(1)} ${(W-M-w).toFixed(1)} ${(H-80).toFixed(1)} cm /Im1 Do Q`);}
   y=H-120;
   for(const sec of sections){
@@ -540,8 +546,9 @@ async function buildPdf(title,sections,logoFile){
   const objs=[];const add=s=>{objs.push(s);return objs.length;};
   const cat=add(null),pgs=add(null),f1=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'),f2=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
   let im=null;if(logo)im=add(`<< /Type /XObject /Subtype /Image /Width ${logo.w} /Height ${logo.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${logo.data.length} >>\nstream\n${logo.data}\nendstream`);
+  let im2=null;if(brand)im2=add(`<< /Type /XObject /Subtype /Image /Width ${brand.w} /Height ${brand.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${brand.data.length} >>\nstream\n${brand.data}\nendstream`);
   const kids=[];
-  pages.forEach((p,i)=>{const c=p.join('\n');const cs=add(`<< /Length ${c.length} >>\nstream\n${c}\nendstream`);const res=`<< /Font << /F1 ${f1} 0 R /F2 ${f2} 0 R >>${im&&i===0?` /XObject << /Im1 ${im} 0 R >>`:''} >>`;kids.push(add(`<< /Type /Page /Parent ${pgs} 0 R /MediaBox [0 0 ${W} ${H}] /Resources ${res} /Contents ${cs} 0 R >>`));});
+  pages.forEach((p,i)=>{const c=p.join('\n');const cs=add(`<< /Length ${c.length} >>\nstream\n${c}\nendstream`);const res=`<< /Font << /F1 ${f1} 0 R /F2 ${f2} 0 R >>${i===0&&(im||im2)?` /XObject <<${im?` /Im1 ${im} 0 R`:''}${im2?` /Im2 ${im2} 0 R`:''} >>`:''} >>`;kids.push(add(`<< /Type /Page /Parent ${pgs} 0 R /MediaBox [0 0 ${W} ${H}] /Resources ${res} /Contents ${cs} 0 R >>`));});
   objs[cat-1]=`<< /Type /Catalog /Pages ${pgs} 0 R >>`;objs[pgs-1]=`<< /Type /Pages /Kids [${kids.map(k=>k+' 0 R').join(' ')}] /Count ${kids.length} >>`;
   let out='%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';const off=[];
   objs.forEach((o,i)=>{off.push(out.length);out+=`${i+1} 0 obj\n${o}\nendobj\n`;});
